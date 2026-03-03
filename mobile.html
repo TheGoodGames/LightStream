@@ -213,48 +213,50 @@
                         
                         <!-- Expanded view -->
                         <div class="cue-expanded" v-if="expandedCueId === cue.id">
-                            <div class="cue-expanded-preview">
-                                <canvas :id="'canvas-expanded-'+cue.id" width="140" height="105"></canvas>
+                            <div class="cue-expanded-header">
+                                <div class="cue-expanded-title">{{cue.name}}</div>
+                                <button class="cue-action-btn delete" @click="deleteCue(cue.id, $event)" title="Удалить">
+                                    🗑
+                                </button>
+                                <button class="cue-action-btn" @click="toggleCueExpand(cue.id)" style="background: #f0f0f0; color: #8e8e93;" title="Закрыть">
+                                    ×
+                                </button>
                             </div>
-                            <div class="cue-expanded-info">
-                                <div class="cue-expanded-header">
-                                    <div class="cue-expanded-name" style="flex: 1; min-width: 0;">{{cue.name}}</div>
-                                    <button class="cue-action-btn delete" @click="deleteCue(cue.id, $event)" title="Удалить">
-                                        🗑
-                                    </button>
-                                    <button class="cue-action-btn" @click="toggleCueExpand(cue.id)" style="background: #f0f0f0; color: #8e8e93;" title="Закрыть">
-                                        ×
-                                    </button>
+                            <div class="cue-expanded-body">
+                                <div class="cue-expanded-preview">
+                                    <canvas :id="'canvas-expanded-'+cue.id" width="140" height="105"></canvas>
                                 </div>
-                                <div class="cue-expanded-details">
-                                    <div class="cue-detail-row">
-                                        <span class="cue-detail-label">Длит.</span>
-                                        <span class="cue-detail-value">{{cue.duration}}</span>
+                                <div class="cue-expanded-info">
+                                    <div class="cue-expanded-details">
+                                        <div class="cue-detail-row">
+                                            <span class="cue-detail-label">Длит.</span>
+                                            <span class="cue-detail-value">{{cue.duration}}</span>
+                                        </div>
+                                        <div class="cue-detail-row">
+                                            <span class="cue-detail-label">Кадры</span>
+                                            <span class="cue-detail-value">{{cue.frames}}</span>
+                                        </div>
+                                        <div class="cue-detail-row">
+                                            <span class="cue-detail-label">Всел.</span>
+                                            <span class="cue-detail-value">{{cue.universes}}</span>
+                                        </div>
+                                        <div class="cue-detail-row">
+                                            <span class="cue-detail-label">Исп.</span>
+                                            <span class="cue-detail-value">{{cue.used}}</span>
+                                        </div>
+                                        <div class="cue-detail-row" style="grid-column: 1 / -1;">
+                                            <span class="cue-detail-label">Загружен</span>
+                                            <span class="cue-detail-value">{{cue.loaded}}</span>
+                                        </div>
                                     </div>
-                                    <div class="cue-detail-row">
-                                        <span class="cue-detail-label">Кадры</span>
-                                        <span class="cue-detail-value">{{cue.frames}}</span>
+                                    <div class="cue-expanded-actions">
+                                        <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
+                                            ▶
+                                        </button>
+                                        <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
+                                            ■
+                                        </button>
                                     </div>
-                                    <div class="cue-detail-row">
-                                        <span class="cue-detail-label">Всел.</span>
-                                        <span class="cue-detail-value">{{cue.universes}}</span>
-                                    </div>
-                                    <div class="cue-detail-row">
-                                        <span class="cue-detail-label">Исп.</span>
-                                        <span class="cue-detail-value">{{cue.used}}</span>
-                                    </div>
-                                    <div class="cue-detail-row" style="grid-column: 1 / -1;">
-                                        <span class="cue-detail-label">Загружен</span>
-                                        <span class="cue-detail-value">{{cue.loaded}}</span>
-                                    </div>
-                                </div>
-                                <div class="cue-expanded-actions">
-                                    <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
-                                        ▶
-                                    </button>
-                                    <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
-                                        ■
-                                    </button>
                                 </div>
                             </div>
                         </div>

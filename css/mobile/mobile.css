@@ -626,9 +626,37 @@ input:checked + .toggle-slider:before {
 /* Expanded cue card */
 .cue-expanded {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 12px;
     padding: 12px;
+}
+
+.cue-expanded-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.cue-expanded-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1c1c1e;
+    flex: 1;
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.cue-expanded-body {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+@media (max-width: 393px) {
+    .cue-expanded-body {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 380px) {
@@ -661,24 +689,7 @@ input:checked + .toggle-slider:before {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 0;
-}
-
-.cue-expanded-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.cue-expanded-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: #1c1c1e;
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    justify-content: space-between;
 }
 
 .cue-expanded-details {
@@ -712,7 +723,6 @@ input:checked + .toggle-slider:before {
 .cue-expanded-actions {
     display: flex;
     gap: 8px;
-    margin-top: auto;
 }
 
 .cue-action-btn {
