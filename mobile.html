@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#f5f5f7">
+    <meta name="format-detection" content="telephone=no">
+    <title>LS STUDIO EKB</title>
+    
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Mobile Styles -->
+    <link rel="stylesheet" href="css/mobile/mobile.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Top Bar -->
+        <div class="top-bar-mobile">
+            <div class="top-bar-row">
+                <div class="top-logo">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23000' width='64' height='64'/%3E%3Ccircle cx='32' cy='28' r='12' fill='%23fff'/%3E%3Crect x='20' y='44' width='24' height='8' fill='%23fff'/%3E%3C/svg%3E" alt="Logo">
+                    <span>LS STUDIO</span>
+                </div>
+                <div class="top-actions">
+                    <button class="search-btn" @click="toggleSearch">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </button>
+                    <div class="lang-switch" @click="toggleLang">
+                        <span>🌐</span>
+                        <span>{{currentLang}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-bar-container" :class="{active: searchOpen}">
+                <svg class="search-bar-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" class="search-bar-input" placeholder="Поиск..." v-model="searchQuery" v-show="searchOpen">
+                <button class="search-bar-close" @click="toggleSearch">×</button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main style="flex: 1;">
+            
+            <!-- Section: Monitoring -->
+            <section class="mobile-section" v-show="currentPage === 'monitoring'">
+                <div class="section-header">
+                    <h1 class="section-title">Мониторинг</h1>
+                    <button class="section-action">Все</button>
+                </div>
+                
+                <div class="cards-scroll-wrapper">
+                    <div class="cards-scroll">
+                        <div class="card-tile" 
+                             :class="{highlight: card.highlight}" 
+                             v-for="card in monitoringCards" 
+                             :key="card.id">
+                            <div class="card-tile-icon">{{card.icon}}</div>
+                            <div class="card-tile-title">{{card.title}}</div>
+                            <div class="card-tile-value">{{card.value}}</div>
+                            <div class="card-tile-subtitle" v-if="card.subtitle">{{card.subtitle}}</div>
+                        </div>
+                    </div>
+                    <div class="cards-scroll-hint">→</div>
+                </div>
+            </section>
+            
+            <!-- Section: IO Ports -->
+            <section class="mobile-section" v-show="currentPage === 'monitoring'">
+                <div class="section-header">
+                    <h1 class="section-title">Входы и выходы</h1>
+                    <button class="section-action">Настроить</button>
+                </div>
+                
+                <div class="cards-scroll">
+                    <div class="io-tile" v-for="port in ioPorts" :key="port.id">
+                        <div class="io-tile-icon">{{port.icon}}</div>
+                        <div class="io-tile-label">{{port.label}}</div>
+                        <label class="toggle-switch io-tile-switch">
+                            <input type="checkbox" v-model="port.enabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Network Interfaces -->
+            <section class="mobile-section" v-show="currentPage === 'monitoring'">
+                <div class="section-header">
+                    <h1 class="section-title">Сетевые интерфейсы</h1>
+                    <button class="section-action">Настройки</button>
+                </div>
+                
+                <div class="network-list">
+                    <div class="network-card-mobile" v-for="(net, index) in networkInterfaces" :key="net.name">
+                        <div class="network-card-header" @click="toggleNetworkExpand(index)">
+                            <div class="network-card-title">
+                                <span>{{net.icon}}</span>
+                                <span>{{net.name}}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="network-card-status">
+                                    <span class="status-dot"></span>
+                                    <span>{{net.status}}</span>
+                                </div>
+                                <div class="network-card-expand" :class="{expanded: net.expanded}">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#8e8e93">
+                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="network-card-content" :class="{show: net.expanded}">
+                            <div class="network-info-row">
+                                <span class="network-info-label">IP адрес</span>
+                                <span class="network-info-value">{{net.ip}}</span>
+                            </div>
+                            <div class="network-info-row">
+                                <span class="network-info-label">Маска</span>
+                                <span class="network-info-value">{{net.mask}}</span>
+                            </div>
+                            <div class="network-info-row">
+                                <span class="network-info-label">Шлюз</span>
+                                <span class="network-info-value">{{net.gateway}}</span>
+                            </div>
+                            <div class="network-info-row">
+                                <span class="network-info-label">DNS</span>
+                                <span class="network-info-value">{{net.dns}}</span>
+                            </div>
+                            <div class="network-info-row">
+                                <span class="network-info-label">MAC</span>
+                                <span class="network-info-value">{{net.mac}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Performance -->
+            <section class="mobile-section" v-show="currentPage === 'monitoring'">
+                <div class="section-header">
+                    <h1 class="section-title">Производительность системы</h1>
+                    <button class="section-action">Подробнее</button>
+                </div>
+                
+                <div class="cards-scroll">
+                    <div class="perf-tile" v-for="perf in performanceCards" :key="perf.id">
+                        <div class="perf-tile-icon">{{perf.icon}}</div>
+                        <div class="perf-tile-value">{{perf.value}}</div>
+                        <div class="perf-tile-label">{{perf.label}}</div>
+                        <div class="perf-tile-label" v-if="perf.subtitle" style="margin-top: 4px;">{{perf.subtitle}}</div>
+                        <div class="perf-bar">
+                            <div class="perf-bar-fill" :style="{width: perf.barWidth + '%'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Page: Devices -->
+            <section class="mobile-section" v-show="currentPage === 'devices'">
+                <div class="section-header">
+                    <h1 class="section-title">Устройства</h1>
+                    <button class="section-action">Добавить</button>
+                </div>
+                <div class="cards-scroll">
+                    <div class="card-tile vertical" v-for="device in monitoringCards.slice(0,4)" :key="device.id">
+                        <div class="card-tile-icon">{{device.icon}}</div>
+                        <div class="card-tile-title">{{device.title}}</div>
+                        <div class="card-tile-value">{{device.value}}</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Page: Scheduler -->
+            <section class="mobile-section" v-show="currentPage === 'scheduler'">
+                <div class="section-header">
+                    <h1 class="section-title">Расписание</h1>
+                    <button class="section-action">+ Событие</button>
+                </div>
+                <div style="background: #fff; border-radius: 16px; padding: 20px; text-align: center; color: #8e8e93;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">📅</div>
+                    <div style="font-size: 16px; font-weight: 500; color: #1c1c1e; margin-bottom: 8px;">Нет событий</div>
+                    <div style="font-size: 14px;">Нажмите "+ Событие" чтобы добавить</div>
+                </div>
+            </section>
+            
+            <!-- Page: Cues -->
+            <section class="mobile-section" v-show="currentPage === 'cues'">
+                <div class="section-header">
+                    <h1 class="section-title">Анимации</h1>
+                    <button class="section-action">Загрузить</button>
+                </div>
+                
+                <div class="cues-grid">
+                    <div class="cue-tile" 
+                         :class="{expanded: expandedCueId === cue.id}" 
+                         v-for="cue in cues" 
+                         :key="cue.id"
+                         @click="toggleCueExpand(cue.id)">
+                        
+                        <!-- Expanded view -->
+                        <div class="cue-expanded" v-if="expandedCueId === cue.id">
+                            <div class="cue-expanded-preview">
+                                <canvas :id="'canvas-expanded-'+cue.id" width="140" height="105"></canvas>
+                            </div>
+                            <div class="cue-expanded-info">
+                                <div class="cue-expanded-header">
+                                    <div class="cue-expanded-name" style="flex: 1; min-width: 0;">{{cue.name}}</div>
+                                </div>
+                                <div class="cue-expanded-actions" style="margin-bottom: 10px;">
+                                    <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
+                                        ▶
+                                    </button>
+                                    <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
+                                        ■
+                                    </button>
+                                    <button class="cue-action-btn delete" @click="deleteCue(cue.id, $event)">
+                                        🗑
+                                    </button>
+                                    <button class="cue-action-btn" @click="toggleCueExpand(cue.id)" style="background: #f0f0f0; color: #8e8e93; margin-left: auto;" title="Закрыть">
+                                        ×
+                                    </button>
+                                </div>
+                                <div class="cue-expanded-details">
+                                    <div class="cue-detail-row">
+                                        <span class="cue-detail-label">Длит.</span>
+                                        <span class="cue-detail-value">{{cue.duration}}</span>
+                                    </div>
+                                    <div class="cue-detail-row">
+                                        <span class="cue-detail-label">Кадры</span>
+                                        <span class="cue-detail-value">{{cue.frames}}</span>
+                                    </div>
+                                    <div class="cue-detail-row">
+                                        <span class="cue-detail-label">Всел.</span>
+                                        <span class="cue-detail-value">{{cue.universes}}</span>
+                                    </div>
+                                    <div class="cue-detail-row">
+                                        <span class="cue-detail-label">Исп.</span>
+                                        <span class="cue-detail-value">{{cue.used}}</span>
+                                    </div>
+                                    <div class="cue-detail-row" style="grid-column: 1 / -1;">
+                                        <span class="cue-detail-label">Загружен</span>
+                                        <span class="cue-detail-value">{{cue.loaded}}</span>
+                                    </div>
+                                </div>
+                                <div class="cue-expanded-actions">
+                                    <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
+                                        ▶
+                                    </button>
+                                    <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
+                                        ■
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Compact view -->
+                        <div v-else>
+                            <div class="cue-tile-preview">
+                                <canvas :id="'canvas-'+cue.id" width="160" height="120"></canvas>
+                            </div>
+                            <div class="cue-tile-content">
+                                <div class="cue-tile-name">{{cue.name}}</div>
+                                <div class="cue-tile-duration">{{cue.duration}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Page: Settings -->
+            <section class="mobile-section" v-show="currentPage === 'settings'">
+                <div class="section-header">
+                    <h1 class="section-title">Настройки</h1>
+                </div>
+                <div style="background: #fff; border-radius: 16px; overflow: hidden;">
+                    <div style="padding: 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 16px;">🌐 Язык</span>
+                        <span style="color: #8e8e93;">{{currentLang}}</span>
+                    </div>
+                    <div style="padding: 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 16px;">🔔 Уведомления</span>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                    <div style="padding: 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 16px;">🎨 Тема</span>
+                        <span style="color: #8e8e93;">Светлая →</span>
+                    </div>
+                    <div style="padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 16px;">ℹ️ О приложении</span>
+                        <span style="color: #8e8e93; font-size: 14px;">v1.1.2</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Spacer for bottom nav -->
+            <div class="content-spacer"></div>
+        </main>
+        
+        <!-- Bottom Navigation (Floating) -->
+        <nav class="bottom-nav">
+            <button class="nav-item" 
+                    :class="{active: currentPage === item.id}" 
+                    v-for="item in navItems" 
+                    :key="item.id"
+                    @click="navigateTo(item.id)">
+                <span class="nav-item-icon">{{item.icon}}</span>
+                <span class="nav-item-label">{{item.label}}</span>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Mobile App Script -->
+    <script src="js/mobile/mobile-app.js"></script>
+</body>
+</html>
