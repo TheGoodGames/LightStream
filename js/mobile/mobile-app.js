@@ -8,6 +8,10 @@ createApp({
         const searchQuery = ref('');
         const currentLang = ref('RU');
         
+        const weekDays = ref(['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']);
+        const otherMonthDays = ref([23, 24, 25, 26, 27, 28, 1]);
+        const currentMonthDays = ref([2, 3, 4, 5, 6, 7, 8]);
+        
         // Данные мониторинга
         const monitoringCards = ref([
             { id: 'uptime', title: 'Время работы', value: '5 д. 22 ч.', subtitle: '', icon: '🕐', highlight: false },
@@ -73,6 +77,23 @@ createApp({
             { id: 7, name: '005Celebrity.cue', duration: '60 sec', frames: 2400, universes: 5, used: 0, loaded: '25.02.2026', color: '#9370db' },
             { id: 8, name: 'ScreenSpace.cue', duration: '60 sec', frames: 2400, universes: 5, used: 1, loaded: '25.02.2026', color: '#20b2aa' },
         ]);
+        
+        // Устройства
+        const allDevices = ref([
+            { uid: 'aba861', name: 'Light Stream Player V1', ip: '192.168.0.203', type: 'Lighting console', firmware: '1.2.1', status: 'online', ports: 1 },
+            { uid: '864598', name: 'Light Stream Player V2', ip: '192.168.0.215', type: 'Lighting console', firmware: '1.2.1', status: 'online', ports: 4 },
+            { uid: '8616bb', name: 'Light Stream Player V2', ip: '192.168.0.204', type: 'Lighting console', firmware: '1.2.1', status: 'online', ports: 4 },
+            { uid: '1090f6', name: 'Converter 6 Rev3', ip: '192.168.0.41', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
+            { uid: '2cf628', name: 'STUDIO21 C2', ip: '192.168.0.59', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 2 },
+            { uid: 'd2419e', name: 'STUDIO21 C6', ip: '192.168.0.99', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
+            { uid: '26c7d0', name: 'Converter 6-26C7D0', ip: '192.168.0.137', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
+            { uid: '47c5f1', name: 'Converter 2 Rev3', ip: '192.168.0.46', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 2 },
+            { uid: '77fe02', name: 'Converter 8L-77FE02', ip: '192.168.0.57', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 8 },
+            { uid: 'fd9a2e', name: 'Light Stream Player V2', ip: '192.168.0.205', type: 'Lighting console', firmware: '1.2.0', status: 'online', ports: 4 },
+        ]);
+        
+        const dmxConverters = computed(() => allDevices.value.filter(d => d.type === 'Dmx converter'));
+        const lightingConsoles = computed(() => allDevices.value.filter(d => d.type === 'Lighting console'));
         
         const expandedCueId = ref(null);
         
@@ -206,12 +227,18 @@ createApp({
             searchOpen,
             searchQuery,
             currentLang,
+            weekDays,
+            otherMonthDays,
+            currentMonthDays,
             monitoringCards,
             ioPorts,
             networkInterfaces,
             performanceCards,
             cues,
             expandedCueId,
+            allDevices,
+            dmxConverters,
+            lightingConsoles,
             navItems,
             toggleSearch,
             toggleLang,

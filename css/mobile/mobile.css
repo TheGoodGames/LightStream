@@ -758,6 +758,140 @@ input:checked + .toggle-slider:before {
     transform: scale(0.95);
 }
 
+/* ===== DEVICES PAGE ===== */
+.devices-stat {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.devices-stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    min-width: 160px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.devices-stat-label {
+    font-size: 12px;
+    color: #8e8e93;
+    margin-bottom: 8px;
+}
+
+.devices-stat-value {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.devices-stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #dc5f20;
+}
+
+.devices-stat-unit {
+    font-size: 14px;
+    color: #8e8e93;
+}
+
+.devices-section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #1c1c1e;
+    margin: 20px 0 12px;
+}
+
+.device-tile {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px;
+    min-width: 160px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.device-tile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.device-tile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c1c1e;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.device-tile-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.device-tile-status.online {
+    color: #34c759;
+}
+
+.device-tile-status.offline {
+    color: #f44336;
+}
+
+.device-tile-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.device-tile-status-dot.online {
+    background: #34c759;
+    box-shadow: 0 0 6px rgba(52, 199, 89, 0.5);
+}
+
+.device-tile-status-dot.offline {
+    background: #f44336;
+}
+
+.device-tile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.device-tile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+}
+
+.device-tile-row-label {
+    color: #8e8e93;
+}
+
+.device-tile-row-value {
+    color: #1c1c1e;
+    font-weight: 500;
+}
+
+.device-tile-uid {
+    font-family: monospace;
+    font-size: 10px;
+    color: #8e8e93;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
 /* iPhone 14 Pro Max optimization */
 @media (max-width: 393px) {
     .cue-expanded {

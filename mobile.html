@@ -173,13 +173,82 @@
             <section class="mobile-section" v-show="currentPage === 'devices'">
                 <div class="section-header">
                     <h1 class="section-title">Устройства</h1>
-                    <button class="section-action">Добавить</button>
+                    <button class="section-action">Обновить</button>
                 </div>
+                
+                <!-- Statistics -->
+                <div class="devices-stat">
+                    <div class="devices-stat-card">
+                        <div class="devices-stat-label">DMX Converter</div>
+                        <div class="devices-stat-value">
+                            <span class="devices-stat-number">{{dmxConverters.length}}</span>
+                            <span class="devices-stat-unit">шт</span>
+                        </div>
+                    </div>
+                    <div class="devices-stat-card">
+                        <div class="devices-stat-label">Lighting Console</div>
+                        <div class="devices-stat-value">
+                            <span class="devices-stat-number">{{lightingConsoles.length}}</span>
+                            <span class="devices-stat-unit">шт</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DMX Converters -->
+                <div class="devices-section-title">DMX Converter</div>
                 <div class="cards-scroll">
-                    <div class="card-tile vertical" v-for="device in monitoringCards.slice(0,4)" :key="device.id">
-                        <div class="card-tile-icon">{{device.icon}}</div>
-                        <div class="card-tile-title">{{device.title}}</div>
-                        <div class="card-tile-value">{{device.value}}</div>
+                    <div class="device-tile" v-for="device in dmxConverters" :key="device.uid">
+                        <div class="device-tile-header">
+                            <div class="device-tile-name" :title="device.name">{{device.name}}</div>
+                            <div class="device-tile-status" :class="device.status">
+                                <span class="device-tile-status-dot" :class="device.status"></span>
+                                <span>{{device.status === 'online' ? 'В сети' : 'Офлайн'}}</span>
+                            </div>
+                        </div>
+                        <div class="device-tile-info">
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">IP</span>
+                                <span class="device-tile-row-value">{{device.ip}}</span>
+                            </div>
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">Порты</span>
+                                <span class="device-tile-row-value">{{device.ports}}</span>
+                            </div>
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">ПО</span>
+                                <span class="device-tile-row-value">{{device.firmware}}</span>
+                            </div>
+                        </div>
+                        <div class="device-tile-uid">{{device.uid}}</div>
+                    </div>
+                </div>
+                
+                <!-- Lighting Consoles -->
+                <div class="devices-section-title">Lighting Console</div>
+                <div class="cards-scroll">
+                    <div class="device-tile" v-for="device in lightingConsoles" :key="device.uid">
+                        <div class="device-tile-header">
+                            <div class="device-tile-name" :title="device.name">{{device.name}}</div>
+                            <div class="device-tile-status" :class="device.status">
+                                <span class="device-tile-status-dot" :class="device.status"></span>
+                                <span>{{device.status === 'online' ? 'В сети' : 'Офлайн'}}</span>
+                            </div>
+                        </div>
+                        <div class="device-tile-info">
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">IP</span>
+                                <span class="device-tile-row-value">{{device.ip}}</span>
+                            </div>
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">Порты</span>
+                                <span class="device-tile-row-value">{{device.ports}}</span>
+                            </div>
+                            <div class="device-tile-row">
+                                <span class="device-tile-row-label">ПО</span>
+                                <span class="device-tile-row-value">{{device.firmware}}</span>
+                            </div>
+                        </div>
+                        <div class="device-tile-uid">{{device.uid}}</div>
                     </div>
                 </div>
             </section>
