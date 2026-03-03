@@ -25,7 +25,7 @@
                     <span>LS STUDIO</span>
                 </div>
                 <div class="top-actions">
-                    <a href="index.html" class="search-btn" style="text-decoration: none;" title="Десктопная версия">
+                    <a href="desktop.html" class="search-btn" style="text-decoration: none;" title="Десктопная версия">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
                         </svg>
@@ -172,7 +172,7 @@
             <!-- Page: Devices -->
             <section class="mobile-section" v-show="currentPage === 'devices'">
                 <div class="section-header">
-                    <h1 class="section-title">Устройства</h1>
+                    <h1 class="section-title">Устройства Art-Net</h1>
                     <button class="section-action">Обновить</button>
                 </div>
                 
@@ -250,6 +250,14 @@
                         </div>
                         <div class="device-tile-uid">{{device.uid}}</div>
                     </div>
+                </div>
+                
+                <!-- RDM Devices -->
+                <div class="devices-section-title">Устройства RDM</div>
+                <div style="background: #fff; border-radius: 16px; padding: 40px 20px; text-align: center; color: #8e8e93;">
+                    <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.5;">📡</div>
+                    <div style="font-size: 16px; font-weight: 500; color: #1c1c1e; margin-bottom: 8px;">Устройства отсутствуют</div>
+                    <div style="font-size: 14px;">RDM устройства не обнаружены в сети</div>
                 </div>
             </section>
             

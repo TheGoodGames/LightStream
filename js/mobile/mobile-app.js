@@ -84,9 +84,9 @@ createApp({
             { uid: '864598', name: 'Light Stream Player V2', ip: '192.168.0.215', type: 'Lighting console', firmware: '1.2.1', status: 'online', ports: 4 },
             { uid: '8616bb', name: 'Light Stream Player V2', ip: '192.168.0.204', type: 'Lighting console', firmware: '1.2.1', status: 'online', ports: 4 },
             { uid: '1090f6', name: 'Converter 6 Rev3', ip: '192.168.0.41', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
-            { uid: '2cf628', name: 'STUDIO21 C2', ip: '192.168.0.59', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 2 },
+            { uid: '2cf628', name: 'STUDIO21 C2', ip: '192.168.0.59', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'offline', ports: 2 },
             { uid: 'd2419e', name: 'STUDIO21 C6', ip: '192.168.0.99', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
-            { uid: '26c7d0', name: 'Converter 6-26C7D0', ip: '192.168.0.137', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 6 },
+            { uid: '26c7d0', name: 'Converter 6-26C7D0', ip: '192.168.0.137', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'offline', ports: 6 },
             { uid: '47c5f1', name: 'Converter 2 Rev3', ip: '192.168.0.46', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 2 },
             { uid: '77fe02', name: 'Converter 8L-77FE02', ip: '192.168.0.57', type: 'Dmx converter', firmware: 'CvOS v1.9.27', status: 'online', ports: 8 },
             { uid: 'fd9a2e', name: 'Light Stream Player V2', ip: '192.168.0.205', type: 'Lighting console', firmware: '1.2.0', status: 'online', ports: 4 },
@@ -94,6 +94,7 @@ createApp({
         
         const dmxConverters = computed(() => allDevices.value.filter(d => d.type === 'Dmx converter'));
         const lightingConsoles = computed(() => allDevices.value.filter(d => d.type === 'Lighting console'));
+        const rdmDevices = computed(() => allDevices.value.filter(d => d.type === 'RDM device'));
         
         const expandedCueId = ref(null);
         
@@ -239,6 +240,7 @@ createApp({
             allDevices,
             dmxConverters,
             lightingConsoles,
+            rdmDevices,
             navItems,
             toggleSearch,
             toggleLang,

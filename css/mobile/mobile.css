@@ -859,6 +859,7 @@ input:checked + .toggle-slider:before {
 
 .device-tile-status-dot.offline {
     background: #f44336;
+    box-shadow: 0 0 6px rgba(244, 67, 54, 0.3);
 }
 
 .device-tile-info {
