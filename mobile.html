@@ -214,18 +214,10 @@
                             <div class="cue-expanded-info">
                                 <div class="cue-expanded-header">
                                     <div class="cue-expanded-name" style="flex: 1; min-width: 0;">{{cue.name}}</div>
-                                </div>
-                                <div class="cue-expanded-actions" style="margin-bottom: 10px;">
-                                    <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
-                                        ▶
-                                    </button>
-                                    <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
-                                        ■
-                                    </button>
-                                    <button class="cue-action-btn delete" @click="deleteCue(cue.id, $event)">
+                                    <button class="cue-action-btn delete" @click="deleteCue(cue.id, $event)" title="Удалить">
                                         🗑
                                     </button>
-                                    <button class="cue-action-btn" @click="toggleCueExpand(cue.id)" style="background: #f0f0f0; color: #8e8e93; margin-left: auto;" title="Закрыть">
+                                    <button class="cue-action-btn" @click="toggleCueExpand(cue.id)" style="background: #f0f0f0; color: #8e8e93;" title="Закрыть">
                                         ×
                                     </button>
                                 </div>
@@ -252,6 +244,14 @@
                                     </div>
                                 </div>
                                 <div class="cue-expanded-actions">
+                                    <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
+                                        ▶
+                                    </button>
+                                    <button class="cue-action-btn stop" @click="stopCue(cue.id, $event)">
+                                        ■
+                                    </button>
+                                </div>
+                            </div>
                                     <button class="cue-action-btn play" @click="playCue(cue.id, $event)">
                                         ▶
                                     </button>
