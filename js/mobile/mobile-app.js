@@ -199,20 +199,41 @@ createApp({
             ctx.stroke();
         };
         
+        const redrawAllPreviews = () => {
+            setTimeout(() => {
+                cues.value.forEach((cue) => {
+                    drawPreview('canvas-' + cue.id, cue.color);
+                });
+                // Also redraw expanded if exists
+                if (expandedCueId.value) {
+                    const cue = cues.value.find(c => c.id === expandedCueId.value);
+                    if (cue) {
+                        drawPreview('canvas-expanded-' + cue.id, cue.color);
+                    }
+                }
+            }, 50);
+        };
+        
         onMounted(() => {
             console.log('Mobile app mounted');
             showScrollHint();
             
             // Draw cue previews after DOM is ready
-            setTimeout(() => {
-                cues.value.forEach((cue, i) => {
-                    drawPreview('canvas-' + cue.id, cue.color);
-                });
-            }, 100);
+            redrawAllPreviews();
         });
         
         // Watch for expanded cue and draw its preview
-        watch(expandedCueId, (newId) => {
+        watch(expandedCueId, (newId, oldId) => {
+            // When collapsing, redraw the compact preview
+            if (oldId) {
+                const oldCue = cues.value.find(c => c.id === oldId);
+                if (oldCue) {
+                    setTimeout(() => {
+                        drawPreview('canvas-' + oldCue.id, oldCue.color);
+                    }, 100);
+                }
+            }
+            // When expanding, draw the expanded preview
             if (newId) {
                 const cue = cues.value.find(c => c.id === newId);
                 if (cue) {

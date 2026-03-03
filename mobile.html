@@ -340,8 +340,8 @@
 
                         <!-- Compact view -->
                         <div v-else>
-                            <div class="cue-tile-preview">
-                                <canvas :id="'canvas-'+cue.id" width="160" height="120"></canvas>
+                            <div class="cue-tile-preview" style="overflow: hidden;">
+                                <canvas :id="'canvas-'+cue.id" width="160" height="120" style="display: block;"></canvas>
                             </div>
                             <div class="cue-tile-content">
                                 <div class="cue-tile-name">{{cue.name}}</div>
