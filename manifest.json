@@ -1,0 +1,21 @@
+{
+  "name": "LS STUDIO EKB",
+  "short_name": "LS STUDIO",
+  "description": "Light Stream Player - система управления освещением",
+  "start_url": "/mobile.html",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#f5f5f7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23000' width='64' height='64'/%3E%3Ccircle cx='32' cy='28' r='12' fill='%23fff'/%3E%3Crect x='20' y='44' width='24' height='8' fill='%23fff'/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities"],
+  "lang": "ru-RU",
+  "dir": "ltr"
+}

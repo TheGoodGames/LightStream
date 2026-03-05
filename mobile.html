@@ -7,6 +7,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#f5f5f7">
     <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="LS STUDIO">
+    <meta name="application-name" content="LS STUDIO">
+    <meta name="msapplication-TileColor" content="#f5f5f7">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23000' width='64' height='64'/%3E%3Ccircle cx='32' cy='28' r='12' fill='%23fff'/%3E%3Crect x='20' y='44' width='24' height='8' fill='%23fff'/%3E%3C/svg%3E">
+    
     <title>LS STUDIO EKB</title>
     
     <!-- Vue 3 -->
@@ -396,5 +406,16 @@
     
     <!-- Mobile App Script -->
     <script src="js/mobile/mobile-app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>
